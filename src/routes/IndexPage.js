@@ -9,8 +9,6 @@ import { useLoading } from 'react-use-loading'
 import cet4Dict from '../assets/CET4_N.json'
 import cet6Dict from '../assets/CET6_N.json'
 
-const words = ['test', 'happy', 'sad', 'a']
-
 function IndexPage() {
   const [order, setOrder] = useState(0)
   const [{ isLoading, message }, { start, stop }] = useLoading(false)
