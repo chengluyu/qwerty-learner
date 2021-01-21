@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React from 'react'
 import { connect } from 'dva'
 import styles from './IndexPage.css'
 import Word from '../components/Word'
