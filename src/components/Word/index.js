@@ -66,7 +66,6 @@ const Word = ({ word = 'defaultWord', onFinish }) => {
 
   return (
     <div>
-      {console.log('div', value, errorIndex.current)}
       {word.split('').map((t, index) => {
         return <Letter key={`${index}-${t}`} letter={t} state={getState(index)} />
       })}

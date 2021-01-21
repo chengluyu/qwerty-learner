@@ -14,7 +14,6 @@ function IndexPage() {
 
   return (
     <div className={styles.normal}>
-      {console.log(order, words[order])}
       <Word key={`${words[order]}`} word={words[order]} onFinish={onFinish} />
     </div>
   )
