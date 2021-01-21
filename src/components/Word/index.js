@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import Letter from '../Letter'
 
 // const isLetter = (val) => /^[a-zA-z]$/.test(val)
 const isLegal = (val) => /^\w$/.test(val)
 
-const Word = ({ word = 'defaultWord' }) => {
+const Word = ({ word = 'defaultWord', onFinish }) => {
   word = word.replaceAll(' ', '_')
   const [value, setValue] = useState('')
   let errorIndex = useRef(-1)
@@ -15,18 +15,9 @@ const Word = ({ word = 'defaultWord' }) => {
   errorIndex.current = -1
   finishInput.current = !(value.length < word.length)
 
-  useEffect(() => {
-    window.addEventListener('keydown', onKeydown)
-
-    return () => {
-      window.removeEventListener('keydown', onKeydown)
-    }
-  }, [])
-
-  const onKeydown = (e) => {
+  const onKeydown = useCallback((e) => {
     e.preventDefault()
     const char = e.key === ' ' ? '_' : e.key
-
     // todo: 精细化的 preventDefault
 
     if (isLegal(char)) {
@@ -43,7 +34,21 @@ const Word = ({ word = 'defaultWord' }) => {
     } else if (char === 'Backspace') {
       setValue((value) => value.substr(0, value.length - 1))
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('keydown', onKeydown)
+    return () => {
+      window.removeEventListener('keydown', onKeydown)
+    }
+  }, [onKeydown])
+
+  useEffect(() => {
+    // 在 UI 渲染后，如果完成了输入，则通知父组件
+    if (errorIndex.current === -1 && finishInput.current && onFinish) {
+      onFinish()
+    }
+  })
 
   const getState = (index) => {
     const length = value.length
@@ -61,13 +66,17 @@ const Word = ({ word = 'defaultWord' }) => {
 
   return (
     <div>
+      {console.log('div', value, errorIndex.current)}
       {word.split('').map((t, index) => {
-        return <Letter letter={t} state={getState(index)} />
+        return <Letter key={`${index}-${t}`} letter={t} state={getState(index)} />
       })}
     </div>
   )
 }
 
-Word.propTypes = {}
+Word.propTypes = {
+  word: PropTypes.string,
+  onFinish: PropTypes.func,
+}
 
 export default Word

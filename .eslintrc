@@ -1,3 +1,13 @@
 {
-  "extends": ["umi", "prettier"]
+  "plugins": ["react", "react-hooks"],
+  "extends": ["umi", "prettier"],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }
