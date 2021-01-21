@@ -7,12 +7,19 @@ const Letter = ({ letter, state }) => {
 
   switch (state) {
     case '':
+      stateClassName = style.normal
       break
-    case 'sucess':
-      stateClassName = 'sucess'
+    case 'correct':
+      stateClassName = style.correct
+      break
+    case 'error':
+      stateClassName = style.error
+      break
+    default:
+      stateClassName = style.normal
   }
 
-  return <span>{letter}</span>
+  return <span className={`${style.letter} ${stateClassName}`}>{letter}</span>
 }
 
 Letter.propTypes = {
