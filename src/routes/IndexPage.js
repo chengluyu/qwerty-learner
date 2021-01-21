@@ -6,7 +6,7 @@ import Word from '../components/Word'
 function IndexPage() {
   return (
     <div className={styles.normal}>
-      <Word />
+      <Word word="This is a Test" />
     </div>
   )
 }

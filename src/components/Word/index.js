@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import Letter from '../Letter'
 
 // const isLetter = (val) => /^[a-zA-z]$/.test(val)
-const isLetter = (val) => /^[a-zA-z]$/.test(val)
+const isLegal = (val) => /^\w$/.test(val)
 
 const Word = ({ word = 'defaultWord' }) => {
+  word = word.replaceAll(' ', '_')
   const [value, setValue] = useState('')
   let errorIndex = useRef(-1)
   let finishInput = useRef(false)
@@ -15,18 +16,20 @@ const Word = ({ word = 'defaultWord' }) => {
   finishInput.current = !(value.length < word.length)
 
   useEffect(() => {
-    window.addEventListener('keydown', onKeyup)
+    window.addEventListener('keydown', onKeydown)
 
     return () => {
-      window.removeEventListener('keydown', onKeyup)
+      window.removeEventListener('keydown', onKeydown)
     }
   }, [])
 
-  const onKeyup = (e) => {
+  const onKeydown = (e) => {
     e.preventDefault()
-    const char = e.key
+    const char = e.key === ' ' ? '_' : e.key
 
-    if (isLetter(char)) {
+    // todo: 精细化的 preventDefault
+
+    if (isLegal(char)) {
       if (errorIndex.current === -1 && !finishInput.current) {
         setValue((value) => (value += char))
       } else if (errorIndex.current !== -1) {
