@@ -42,8 +42,8 @@ function IndexPage() {
         <option value="cet4">CET-4</option>
         <option value="cet6">CET-6</option>
       </select>
-      <Word key={`${dict[order].name}`} word={dict[order].name} onFinish={onFinish} />
-      <Translation key={`${dict[order].name}`} trans={dict[order].trans[0]} />
+      <Word key={`word-${dict[order].name}`} word={dict[order].name} onFinish={onFinish} />
+      <Translation key={`trans-${dict[order].name}`} trans={dict[order].trans[0]} />
     </div>
   )
 }
