@@ -34,7 +34,6 @@ function IndexPage() {
     }
   }
 
-  console.log(dict[order].trans[0])
   return (
     <div className={styles.normal}>
       {isLoading && <Loading />}
