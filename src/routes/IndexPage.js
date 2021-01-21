@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'dva'
 import styles from './IndexPage.css'
 import Word from '../components/Word'
+import Translation from '../components/Translation'
 import Loading from '../components/Loading'
 import { useLoading } from 'react-use-loading'
 
@@ -33,6 +34,7 @@ function IndexPage() {
     }
   }
 
+  console.log(dict[order].trans[0])
   return (
     <div className={styles.normal}>
       {isLoading && <Loading />}
@@ -41,6 +43,7 @@ function IndexPage() {
         <option value="cet6">CET-6</option>
       </select>
       <Word key={`${dict[order].name}`} word={dict[order].name} onFinish={onFinish} />
+      <Translation key={`${dict[order].name}`} trans={dict[order].trans[0]} />
     </div>
   )
 }
