@@ -1,21 +1,21 @@
-import React from 'react';
-import { connect } from 'dva';
-import styles from './IndexPage.css';
+import React from 'react'
+import { connect } from 'dva'
+import styles from './IndexPage.css'
+import Letter from '../components/Letter'
 
 function IndexPage() {
+  const testWord = 'testtest'
+  console.log(testWord.split(''))
+
   return (
     <div className={styles.normal}>
-      <h1 className={styles.title}>Yay! Welcome to dva!</h1>
-      <div className={styles.welcome} />
-      <ul className={styles.list}>
-        <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
-        <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">Getting Started</a></li>
-      </ul>
+      {testWord.split('').map((i) => (
+        <Letter key={i} letter={i} />
+      ))}
     </div>
-  );
+  )
 }
 
-IndexPage.propTypes = {
-};
+IndexPage.propTypes = {}
 
-export default connect()(IndexPage);
+export default connect()(IndexPage)
