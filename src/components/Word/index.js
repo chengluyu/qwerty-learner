@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import Letter from '../Letter'
 
 // const isLetter = (val) => /^[a-zA-z]$/.test(val)
-const isLegal = (val) => /^\w$/.test(val)
+// const isLegal = (val) => /^\w$/.test(val)
+const isLegal = (val) => /^[a-z_A-Z']$/.test(val)
 
 const Word = ({ word = 'defaultWord', onFinish }) => {
   word = word.replaceAll(' ', '_')
@@ -16,9 +17,12 @@ const Word = ({ word = 'defaultWord', onFinish }) => {
   finishInput.current = !(value.length < word.length)
 
   const onKeydown = useCallback((e) => {
-    e.preventDefault()
-    const char = e.key === ' ' ? '_' : e.key
-    // todo: 精细化的 preventDefault
+    const char = e.key
+
+    if (char === ' ') {
+      // 防止用户惯性按空格导致页面跳动
+      e.preventDefault()
+    }
 
     if (isLegal(char)) {
       if (errorIndex.current === -1 && !finishInput.current) {
