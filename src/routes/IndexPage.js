@@ -3,15 +3,12 @@ import { connect } from 'dva'
 import styles from './IndexPage.css'
 import Word from '../components/Word'
 import Translation from '../components/Translation'
-import Loading from '../components/Loading'
-import { useLoading } from 'react-use-loading'
 
 import cet4Dict from '../assets/CET4_N.json'
 import cet6Dict from '../assets/CET6_N.json'
 
 function IndexPage() {
   const [order, setOrder] = useState(0)
-  const [{ isLoading, message }, { start, stop }] = useLoading(false)
   const [dict, setDict] = useState(cet4Dict)
 
   const onFinish = () => {
@@ -34,7 +31,6 @@ function IndexPage() {
 
   return (
     <div className={styles.normal}>
-      {isLoading && <Loading />}
       <select value={dict} onChange={onChangeDict}>
         <option value="cet4">CET-4</option>
         <option value="cet6">CET-6</option>
