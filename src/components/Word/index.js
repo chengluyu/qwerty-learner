@@ -1,12 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import Letter from '../Letter'
+import { isLegal } from '../../utils/utils'
 
-// const isLetter = (val) => /^[a-zA-z]$/.test(val)
-// const isLegal = (val) => /^\w$/.test(val)
-const isLegal = (val) => /^[a-z_A-Z']$/.test(val)
-
-const Word = ({ word = 'defaultWord', onFinish }) => {
+const Word = ({ word = 'defaultWord', onFinish, isStart }) => {
   word = word.replaceAll(' ', '_')
   const [value, setValue] = useState('')
   let errorIndex = useRef(-1)
@@ -41,11 +38,16 @@ const Word = ({ word = 'defaultWord', onFinish }) => {
   }, [])
 
   useEffect(() => {
-    window.addEventListener('keydown', onKeydown)
-    return () => {
-      window.removeEventListener('keydown', onKeydown)
+    if (isStart) {
+      window.addEventListener('keydown', onKeydown)
     }
-  }, [onKeydown])
+
+    return () => {
+      if (isStart) {
+        window.removeEventListener('keydown', onKeydown)
+      }
+    }
+  }, [isStart, onKeydown])
 
   useEffect(() => {
     // 在 UI 渲染后，如果完成了输入，则通知父组件
